@@ -25,6 +25,24 @@
     letter-spacing: 0.1px;
     color: #ADADAD;
   }
+  &__success-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    height: 400px;
+    svg {
+      width: 48px;
+      height: 48px;
+    }
+    h3 {
+      margin-top: 10px;
+    }
+    p {
+      opacity: 0.5;
+    }
+  }
   .block {
     display: inline-block;
     width: 430px;

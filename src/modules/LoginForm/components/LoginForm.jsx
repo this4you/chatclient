@@ -27,6 +27,7 @@ const LoginForm = () => {
                                 message: 'Please input your Username!',
                             },
                         ]}
+                        hasFeedback='true'
                     >
                         <Input
                             prefix={<UserOutlined className="site-form-item-icon"/>}
@@ -41,6 +42,7 @@ const LoginForm = () => {
                                 message: 'Please input your Password!',
                             },
                         ]}
+                        hasFeedback='true'
                     >
                         <Input
                             prefix={<LockOutlined className="site-form-item-icon"/>}
