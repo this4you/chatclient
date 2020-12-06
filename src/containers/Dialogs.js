@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
-import {Dialogs as BaseDialogs} from '../components'
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
 
-const Dialogs = ({items, userId}) => {
+import {Dialogs as BaseDialogs} from '../components'
+import {dialogsActions} from "../redux/actions";
+
+const Dialogs = ({items = [], userId, fetchDialogs, setCurrentDialogId}) => {
     const [inputValue, setValue] = useState('');
     const [filtered, setFilteredItems] = useState(Array.from(items));
     const onChangeInput = value => {
@@ -11,14 +14,23 @@ const Dialogs = ({items, userId}) => {
             ));
         setValue(value);
     };
+
+    useEffect(() => {
+        if (!items.length) {
+            fetchDialogs();
+        } else {
+            setFilteredItems(items);
+        }
+    }, [items, fetchDialogs])
     return (
         <BaseDialogs
             items={filtered}
             userId={userId}
             onSearch={onChangeInput}
             inputValue={inputValue}
+            onSelectDialog={setCurrentDialogId}
         />
     );
 };
 
-export default Dialogs;
+export default connect(({dialogs}) => dialogs, dialogsActions)(Dialogs);
