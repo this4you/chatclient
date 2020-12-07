@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {Time} from '../';
+import {Time, Avatar} from '../';
 import {IconRead} from '../';
 import convertCurrentTime from '../../utils/convertCurrentTime'
 
@@ -77,7 +77,7 @@ const MessageAudio = ({ audioSrc }) => {
         </div>
     );
 };
-const Message = ({avatar, user, text, date, isMe, isRead, attachments, isTyping, audio}) => {
+const Message = ({user, text, date, isMe, isRead, attachments, isTyping, audio}) => {
     return (
         <div className={classNames('message',
             {
@@ -89,7 +89,7 @@ const Message = ({avatar, user, text, date, isMe, isRead, attachments, isTyping,
             <div className="message__content">
                 <IconRead isMe={isMe} isRead={isRead}/>
                 <div className="message__avatar">
-                    <img src={avatar} alt={`Avatar ${user.fullname}`}/>
+                    <Avatar user={user}/>
                 </div>
                 <div className="message__info">
                     {(audio || text || isTyping) && (

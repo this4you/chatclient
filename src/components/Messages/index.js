@@ -1,19 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Empty} from 'antd';
+import {Empty, Spin} from 'antd';
+import classNames from 'classnames';
 
 import './Messages.scss';
 import {Message} from "../index";
 
-const Messages = ({items}) => {
+const Messages = ({blockRef, items, isLoading}) => {
     return (
-        items && items.length ?
-            <div>
-                {items.map(item => (
-                    <Message {...item} key={item._id} />
-                ))}
-            </div>
-            : <Empty description="Нет сообщений"/>
+        <div
+            ref={blockRef}
+            className={classNames("messages", {"messages--loading": isLoading})}>
+            {isLoading ? (
+                    <Spin tip='Loading...' size='large'/>)
+                : items && items.length > 0 && !isLoading ? (
+                    items.map(item => <Message {...item} key={item._id}/>)
+                ) : (
+                    <Empty description="Нет сообщений"/>
+                )
+            }
+        </div>
     )
 };
 
