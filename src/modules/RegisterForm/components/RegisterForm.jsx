@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Form, Input} from "antd";
 import {Block, Button} from "../../../components";
 import {UserOutlined, LockOutlined, MailOutlined, ExclamationCircleTwoTone} from '@ant-design/icons';
@@ -7,14 +7,11 @@ import {Link} from 'react-router-dom';
 const RegisterForm = props => {
     const success = false;
     const {
-        values,
         touched,
         errors,
         handleChange,
         handleBlur,
-        handleSubmit,
-        isValid,
-        isSubmitting
+        handleSubmit
     } = props;
     return (
         <div>

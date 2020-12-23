@@ -39,8 +39,12 @@
           padding:10px 20px;
           margin-bottom: 0;
           cursor: pointer;
-          &:hover, &.active {
+          &:hover {
             background-color: #f3f7ff;
+          }
+          &--selected, &--selected:hover {
+            background-color: #1890ff;
+            color: #fff !important;
           }
         }
       }
