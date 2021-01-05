@@ -3,14 +3,18 @@ import {connect} from 'react-redux';
 
 import {Dialogs as BaseDialogs} from '../components'
 import {dialogsActions} from "../redux/actions";
+import {socket} from '../core';
 
-const Dialogs = ({items = [], userId, fetchDialogs, setCurrentDialogId, currentDialogId}) => {
+const Dialogs = ({userId, fetchDialogs, setCurrentDialogId, dialogs}) => {
+    const {items = [], currentDialogId} = dialogs;
     const [inputValue, setValue] = useState('');
     const [filtered, setFilteredItems] = useState(Array.from(items));
     const onChangeInput = value => {
         setFilteredItems(
             items.filter(
-                dialog => dialog.user.fullName.toLowerCase().indexOf(value && value.toLowerCase()) >= 0
+                dialog =>
+                    dialog.author.fullName.toLowerCase().indexOf(value.toLowerCase()) >= 0 ||
+                    dialog.partner.fullName.toLowerCase().indexOf(value.toLowerCase()) >= 0,
             ));
         setValue(value);
     };
@@ -22,6 +26,17 @@ const Dialogs = ({items = [], userId, fetchDialogs, setCurrentDialogId, currentD
             setFilteredItems(items);
         }
     }, [items, fetchDialogs])
+
+    useEffect(() => {
+            socket.on('SERVER:DIALOG_CREATED', fetchDialogs);
+            socket.on('SERVER:NEW_MESSAGE', fetchDialogs);
+            // socket.on('SERVER:MESSAGES_READED', updateReadedStatus);
+            return () => {
+                socket.removeListener('SERVER:DIALOG_CREATED', fetchDialogs);
+                socket.removeListener('SERVER:NEW_MESSAGE', fetchDialogs);
+            };
+    }, []);
+
     return (
         <BaseDialogs
             items={filtered}
@@ -34,4 +49,5 @@ const Dialogs = ({items = [], userId, fetchDialogs, setCurrentDialogId, currentD
     );
 };
 
-export default connect(({dialogs}) => dialogs, dialogsActions)(Dialogs);
+export default connect(({dialogs, users}) =>
+    ({dialogs: dialogs, currentUserId: users.data && users.data._id}), dialogsActions)(Dialogs);

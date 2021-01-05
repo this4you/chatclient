@@ -10,6 +10,7 @@ const Actions = {
         type: 'USER:SET_IS_AUTH',
         payload: bool,
     }),
+
     fetchUserData: () => dispatch => {
         userApi
             .getMe()

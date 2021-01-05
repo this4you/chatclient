@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Empty, Spin} from 'antd';
 import classNames from 'classnames';
-
 import './Messages.scss';
 import {Message} from "../index";
 
-const Messages = ({blockRef, items, isLoading}) => {
+const Messages = ({blockRef, items, isLoading, user}) => {
     return (
         <div
             ref={blockRef}
@@ -14,7 +13,7 @@ const Messages = ({blockRef, items, isLoading}) => {
             {isLoading ? (
                     <Spin tip='Loading...' size='large'/>)
                 : items && items.length > 0 && !isLoading ? (
-                    items.map(item => <Message {...item} key={item._id}/>)
+                    items.map(item => <Message {...item}  isMe={user._id === item.user._id} key={item._id}/>)
                 ) : (
                     <Empty description="Нет сообщений"/>
                 )

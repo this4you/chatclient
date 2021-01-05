@@ -14,14 +14,14 @@ const Dialogs = ({items, userId, onSearch, inputValue, onSelectDialog, currentDi
                 onChange={e => onSearch(e.target.value)}
             />
         </div>
-        {items && items.length ? orderBy(items, ["created_at"], ["desc"]).map(item => (
+        {items && items.length ? orderBy(items, ["createdAt"], ["desc"]).map(item => (
                 <DialogItem
-                    id={item._id}
+                    _id={item._id}
                     onSelect={onSelectDialog}
                     key={item._id}
-                    isMe={item.user._id === userId}
-                    {...item}
+                    isMe={item.author._id === userId}
                     currentDialogId={currentDialogId}
+                    {...item}
                 />
             )) :
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Ничего не найдено"/>

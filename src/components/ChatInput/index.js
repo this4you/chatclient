@@ -7,11 +7,18 @@ import {UploadField} from '@navjobs/upload';
 import {Picker} from 'emoji-mart';
 
 const ChatInput = (props) => {
-    const [value, setValue] = useState();
+    const [value, setValue] = useState("");
     const [emojiPickerVisible, setShowEmojiPicker] = useState(false);
+    const {onSendMessage} = props;
     const toggleEmojiPicker = () => {
         setShowEmojiPicker(!emojiPickerVisible);
     };
+    const handleSendMessage = (e) => {
+        if (e.keyCode === 13) {
+            setValue("");
+            onSendMessage(e);
+        }
+    }
     return (
         <div className="chat-input">
             <div className="chat-input__smile-btn">
@@ -24,7 +31,10 @@ const ChatInput = (props) => {
             </div>
             <Input size='large'
                    onChange={e => setValue(e.target.value)}
-                   placeholder="Введите текст сообщения..."/>
+                   onKeyUp={handleSendMessage}
+                   placeholder="Введите текст сообщения..."
+                   value={value}
+            />
             <div className="chat-input__actions">
                 <UploadField
                     onFiles={files => console.log(files)}

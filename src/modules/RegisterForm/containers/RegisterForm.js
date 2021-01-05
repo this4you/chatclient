@@ -1,19 +1,18 @@
-import {withFormik} from "formik";
+import React, {useState} from "react";
+import {connect} from "react-redux";
+import {userActions} from "../../../redux/actions";
 import RegisterForm from '../components/RegisterForm';
-
-export default withFormik({
-    validate: values => {
-        let errors = {};
-        if (!values.email) {
-            errors.email = 'Required';
-        }
-        return errors;
-    },
-    handleSubmit: (values, {setSubmitting}) => {
-        setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-        }, 1000);
-    },
-    displayName: "RegisterForm"
-}) (RegisterForm);
+const RegisterContainer = ({history, fetchUserRegister}) => {
+    const [loading, setLoading] = useState(false);
+    const onFinish = (values) => {
+        setLoading(true);
+        fetchUserRegister(values).then((data) => {
+            console.log(data);
+            setLoading(false);
+        });
+    }
+    return (
+        <RegisterForm onSubmitHandler={onFinish} loading={loading}/>
+    )
+}
+export default connect(({users}) => users, userActions)(RegisterContainer);

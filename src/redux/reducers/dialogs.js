@@ -1,6 +1,6 @@
 const initialState = {
     items: [],
-    currentDialogId: null,
+    currentDialogId: window.location.pathname.split('dialog/')[1], // если выбрать диалог и перелогинится, то будет бага
     isLoading: false
 };
 export default (state = initialState, {type, payload}) => {

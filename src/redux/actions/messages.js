@@ -1,6 +1,20 @@
 import {messageApi} from "../../utils/api";
 
 const actions = {
+    fetchSendMessage: ({ text, dialog_id, attachments }) => dispatch => {
+        return messageApi.send(text, dialog_id, attachments);
+    },
+    addMessage: message => (dispatch, getState) => {
+        const { dialogs } = getState();
+        const { currentDialogId } = dialogs;
+
+        if (currentDialogId === message.dialog._id) {
+            dispatch({
+                type: "MESSAGES:ADD_MESSAGE",
+                payload: message
+            });
+        }
+    },
     setMessages: items => ({
         type: 'MESSAGES:SET_ITEMS',
         payload: items

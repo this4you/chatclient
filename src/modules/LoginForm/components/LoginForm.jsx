@@ -1,24 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Form, Input} from "antd";
 import {Block, Button} from "../../../components";
 import {LockOutlined, MailOutlined} from '@ant-design/icons';
 import {Link} from 'react-router-dom';
-import {connect} from "react-redux";
 
-
-import {userActions} from '../../../redux/actions';
-
-const LoginForm = ({fetchUserLogin, history}) => {
-    const [loading, setLoading] = useState(false);
-    const onFinish = (values) => {
-        setLoading(true);
-        fetchUserLogin(values).then(data => {
-            if (data && data.status === "success") {
-                history.push('/');
-            }
-            setLoading(false);
-        })
-    };
+const LoginForm = ({loading, submitHandler}) => {
     return (
         <div>
             <div className="auth__top">
@@ -29,7 +15,7 @@ const LoginForm = ({fetchUserLogin, history}) => {
                 <Form
                     name="normal_login"
                     className="login-form"
-                    onFinish={onFinish}
+                    onFinish={submitHandler}
 
                 >
                     <Form.Item
@@ -37,8 +23,8 @@ const LoginForm = ({fetchUserLogin, history}) => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your Username!',
-                                type: "email"
+                                message: 'Please input your Email!',
+                                type: "email",
                             },
                         ]}
                         hasFeedback='true'
@@ -55,10 +41,14 @@ const LoginForm = ({fetchUserLogin, history}) => {
                                 required: true,
                                 message: 'Please input your Password!',
                             },
+                            {
+                                message: 'Password must be minimum 3 symbols',
+                                min: 3
+                            },
                         ]}
                         hasFeedback='true'
                     >
-                        <Input
+                        <Input.Password
                             prefix={<LockOutlined className="site-form-item-icon"/>}
                             type="password"
                             placeholder="Password"
@@ -75,4 +65,4 @@ const LoginForm = ({fetchUserLogin, history}) => {
     );
 };
 
-export default connect(({users}) => users, userActions)(LoginForm);
+export default LoginForm;

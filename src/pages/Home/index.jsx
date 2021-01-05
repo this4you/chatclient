@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import "./Home.scss"
 import {TeamOutlined, EllipsisOutlined, FormOutlined} from '@ant-design/icons';
 import {Button} from "antd";
-import {Status, ChatInput} from "../../components/";
-import {Dialogs, Messages} from "../../containers"
+import {connect} from "react-redux";
+import {withRouter} from "react-router";
 
-const Home = () => {
+import {Dialogs, Messages, ChatInput, Status} from "../../containers";
+import {socket} from "../../core";
+//TODO: доделать проверку на верификацию при авторизации
+//TODO: доделать отображегие подьзователя в диалоге
+const Home = ({currentUserId}) => {
+    useEffect(() => {
+        if (currentUserId) {
+            console.log(currentUserId.toString());
+            socket.emit('join', currentUserId.toString());
+        }
+    }, [currentUserId]);
     return (
         <section className="home">
             <div className="chat">
@@ -30,12 +40,7 @@ const Home = () => {
                 <div className="chat__dialog">
                     <div className="chat__dialog-header">
                         <div/>
-                        <div className="chat__dialog-header-center">
-                            <b className="chat__dialog-header-username">Аня</b>
-                            <div className="chat__dialog-header-status">
-                                <Status online={true}/>
-                            </div>
-                        </div>
+                        <Status/>
                         <Button type='ghost' shape='circle'>
                             <EllipsisOutlined style={{fontSize: '20px'}}/>
                         </Button>
@@ -52,4 +57,8 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default withRouter(
+    connect(
+        ({users}) => ({currentUserId: users.data && users.data._id})
+    )(Home),
+);
