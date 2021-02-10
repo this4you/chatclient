@@ -1,0 +1,11 @@
+.add-dialog-form {
+  textarea {
+    resize: none;
+  }
+  .ant-form-item {
+    margin-bottom: 10px;
+    &-label {
+      line-height: inherit !important;
+    }
+  }
+}

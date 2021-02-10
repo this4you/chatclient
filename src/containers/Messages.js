@@ -5,8 +5,9 @@ import {messagesActions} from "../redux/actions";
 import {Messages as BaseMessages} from '../components';
 import {socket} from '../core';
 
-const Messages = ({messages = [], currentDialogId, fetchMessages, addMessage, isLoading, currentUser}) => {
+const Messages = ({messages = [], currentDialogId, fetchMessages, addMessage, isLoading, currentUser, removeMessageById}) => {
     const messageRef = useRef(null);
+
     useEffect(() => {
         if (currentDialogId) {
             fetchMessages(currentDialogId);
@@ -30,6 +31,7 @@ const Messages = ({messages = [], currentDialogId, fetchMessages, addMessage, is
             items={messages}
             blockRef={messageRef}
             user={currentUser}
+            onRemoveMessage={removeMessageById}
         />
     );
 };

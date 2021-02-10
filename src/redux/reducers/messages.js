@@ -20,6 +20,21 @@ export default (state = initialState, {type, payload}) => {
                 ...state,
                 isLoading: payload
             }
+        case 'DIALOGS:LAST_MESSAGE_READED_STATUS':
+            return {
+                ...state,
+                items: state.items.map(message => {
+                    if (message.dialog._id === payload.dialogId) {
+                        message.readed = true;
+                    }
+                    return message;
+                }),
+            };
+        case 'MESSAGES:REMOVE_MESSAGE':
+            return {
+                ...state,
+                items: state.items.filter(message => message._id !== payload),
+            };
         default:
             return state;
     }

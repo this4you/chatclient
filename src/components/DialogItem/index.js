@@ -7,18 +7,23 @@ import {IconRead, Avatar} from '../';
 import {Link} from "react-router-dom";
 
 const getMessageTime = createdAt => {
-    createdAt = parseISO(createdAt);
-    if (isToday(createdAt)) {
-        return format(createdAt, 'HH:mm');
-    } else {
-        return format(createdAt, 'dd.MM.yyyy');
+    if (createdAt) {
+        createdAt = parseISO(createdAt);
+        if (isToday(createdAt)) {
+            return format(createdAt, 'HH:mm');
+        } else {
+            return format(createdAt, 'dd.MM.yyyy');
+        }
     }
 };
 // TODO: Доделать счет непрочитаных сообщений
-// TODO: Дописать логику определения партнера с диалога в зависимости от текущего юзера
+// TODO: Доделать логику прочтения сообщения
+// TODO: Доделать логику обновления списка диалогов при получении сообщения
 const renderLastMessage = (message, userId) => {
     let text = '';
-    if (!message.text && message.attachments.length) {
+    if (!message) {
+        return text;
+    } else if (!message.text && message.attachments.length) {
         text = 'прикрепленный файл';
     } else {
         text = message.text;
@@ -45,12 +50,12 @@ const DialogItem = ({_id, createdAt, isMe, currentDialogId, partner, lastMessage
                 <div className="dialogs__item-info-top">
                     <b>{partner.fullName}</b>
                     <span>
-                    {getMessageTime(createdAt)}
+                    {getMessageTime(lastMessage && lastMessage.createdAt)}
                 </span>
                 </div>
                 <div className="dialogs__item-info-bottom">
                     <p>
-                        {lastMessage && lastMessage.text}
+                        {renderLastMessage(lastMessage, userId)}
                     </p>
                     <IconRead isMe={isMe} isRead={false}/>
                     {/*{unread > 0 && <div className="dialogs__item-info-bottom-count">{unread > 9 ? '+9' : unread}</div>}*/}

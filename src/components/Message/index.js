@@ -4,12 +4,17 @@ import classNames from 'classnames';
 import {Time, Avatar} from '../';
 import {IconRead} from '../';
 import convertCurrentTime from '../../utils/convertCurrentTime'
+import {Popover, Button, Icon} from 'antd';
+import reactStringReplace from "react-string-replace";
+import {Emoji} from "emoji-mart";
 
 import waveSvg from '../../assets/img/wave.svg'
 import pauseSvg from '../../assets/img/pause.svg'
 import playSvg from '../../assets/img/play.svg'
 import './Message.scss';
-const MessageAudio = ({ audioSrc }) => {
+import {EllipsisOutlined} from "@ant-design/icons";
+
+const MessageAudio = ({audioSrc}) => {
     const audioElem = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -57,27 +62,27 @@ const MessageAudio = ({ audioSrc }) => {
 
     return (
         <div className="message__audio">
-            <audio ref={audioElem} src={audioSrc} preload="auto" />
-            <div className="message__audio-progress" style={{ width: progress + '%' }} />
+            <audio ref={audioElem} src={audioSrc} preload="auto"/>
+            <div className="message__audio-progress" style={{width: progress + '%'}}/>
             <div className="message__audio-info">
                 <div className="message__audio-btn">
                     <button onClick={togglePlay}>
                         {isPlaying ? (
-                            <img src={pauseSvg} alt="Pause svg" />
+                            <img src={pauseSvg} alt="Pause svg"/>
                         ) : (
-                            <img src={playSvg} alt="Play svg" />
+                            <img src={playSvg} alt="Play svg"/>
                         )}
                     </button>
                 </div>
                 <div className="message__audio-wave">
-                    <img src={waveSvg} alt="Wave svg" />
+                    <img src={waveSvg} alt="Wave svg"/>
                 </div>
                 <span className="message__audio-duration">{convertCurrentTime(currentTime)}</span>
             </div>
         </div>
     );
 };
-const Message = ({user, text, date, isMe, isRead, attachments, isTyping, audio}) => {
+const Message = ({user, text, date, isMe, isRead, attachments, isTyping, audio, onRemoveMessage}) => {
     return (
         <div className={classNames('message',
             {
@@ -88,13 +93,29 @@ const Message = ({user, text, date, isMe, isRead, attachments, isTyping, audio})
             })}>
             <div className="message__content">
                 <IconRead isMe={isMe} isRead={isRead}/>
+                <Popover
+                    content={
+                        <div>
+                            <Button onClick={onRemoveMessage}>Удалить сообщение</Button>
+                        </div>
+                    }
+                    trigger="click">
+                    <div className="message__icon-actions">
+                        <Button type='ghost' shape='circle'>
+                            <EllipsisOutlined style={{fontSize: '15px'}}/>
+                        </Button>
+                    </div>
+                </Popover>
                 <div className="message__avatar">
                     <Avatar user={user}/>
                 </div>
                 <div className="message__info">
                     {(audio || text || isTyping) && (
                         <div className="message__bubble">
-                            {text && <p className="message__text">{text}</p>}
+                            {text && <p className="message__text"> {
+                                reactStringReplace(text, /:(.+?):/g, (match, i) => (
+                                    <Emoji key={i} emoji={match} set="apple" size={20}/>
+                                ))}</p>}
                             {isTyping &&
                             <div className="message__typing">
                                 <span/>
@@ -103,7 +124,7 @@ const Message = ({user, text, date, isMe, isRead, attachments, isTyping, audio})
                             </div>
                             }
                             {audio &&
-                                <MessageAudio audioSrc={audio}/>
+                            <MessageAudio audioSrc={audio}/>
                             }
                         </div>
                     )}

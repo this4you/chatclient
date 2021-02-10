@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import './ChatInput.scss';
 import {SmileOutlined, AudioOutlined, CameraOutlined, CheckCircleOutlined} from "@ant-design/icons";
@@ -13,17 +13,36 @@ const ChatInput = (props) => {
     const toggleEmojiPicker = () => {
         setShowEmojiPicker(!emojiPickerVisible);
     };
+    const addEmoji = ({colons}) => {
+        setValue(value + colons);
+    };
+
     const handleSendMessage = (e) => {
         if (e.keyCode === 13) {
             setValue("");
             onSendMessage(e);
         }
     }
+
+    useEffect(() => {
+        const el = document.querySelector('.chat-input__smile-btn');
+        document.addEventListener('click', handleOutsideClick.bind(this, el));
+        return () => {
+            document.removeEventListener('click', handleOutsideClick.bind(this, el));
+        };
+    }, []);
+
+    const handleOutsideClick = (el, e) => {
+        if (el && !el.contains(e.target)) {
+            setShowEmojiPicker(false);
+        }
+    };
+
     return (
         <div className="chat-input">
             <div className="chat-input__smile-btn">
                 {emojiPickerVisible && (<div className="chat-input__emoji-picker">
-                    <Picker set='apple'/>
+                    <Picker showPreview={false} showSkinTones={false} set='apple' onSelect={(data) => addEmoji(data)}/>
                 </div>)}
                 <Button type='ghost' shape='circle' onClick={toggleEmojiPicker}>
                     <SmileOutlined/>

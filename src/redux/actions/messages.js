@@ -30,6 +30,21 @@ const actions = {
         }).catch(() => {
             dispatch(actions.setIsLoading(false));
         });
+    },
+    removeMessageById: id => dispatch => {
+        if (window.confirm("Вы действительно хотите удалить сообщение?")) {
+            messageApi
+                .removeById(id)
+                .then(({ data }) => {
+                    dispatch({
+                        type: "MESSAGES:REMOVE_MESSAGE",
+                        payload: id
+                    });
+                })
+                .catch(() => {
+                    dispatch(actions.setIsLoading(false));
+                });
+        }
     }
 }
 export default actions;

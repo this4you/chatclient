@@ -10,7 +10,7 @@ const RegisterForm = ({loading, onSubmitHandler}) => {
         <div>
             <div className="auth__top">
                 <h2>Регистрация</h2>
-                <p>Для входа в чат, вам нужно зарегестрироваться</p>
+                <p>Для входа в чат, вам нужно зарегистрироваться</p>
             </div>
             <Block>
                 {!success ? (
@@ -101,7 +101,7 @@ const RegisterForm = ({loading, onSubmitHandler}) => {
                             />
                         </Form.Item>
                         <Form.Item>
-                            <Button loading={loading} type='primary' size='large' htmlType="submit">Зарегестрироваться</Button>
+                            <Button loading={loading} type='primary' size='large' htmlType="submit">Зарегистрироваться</Button>
                         </Form.Item>
                         <Link to='/login' className="auth__register-link">Войти в аккаунт</Link>
                     </Form>

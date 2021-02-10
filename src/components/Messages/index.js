@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import './Messages.scss';
 import {Message} from "../index";
 
-const Messages = ({blockRef, items, isLoading, user}) => {
+const Messages = ({blockRef, items, isLoading, user, onRemoveMessage}) => {
     return (
         <div
             ref={blockRef}
@@ -13,7 +13,8 @@ const Messages = ({blockRef, items, isLoading, user}) => {
             {isLoading ? (
                     <Spin tip='Loading...' size='large'/>)
                 : items && items.length > 0 && !isLoading ? (
-                    items.map(item => <Message {...item}  isMe={user._id === item.user._id} key={item._id}/>)
+                    items.map(item => <Message {...item} isMe={user._id === item.user._id} key={item._id}
+                                               onRemoveMessage={onRemoveMessage.bind(this, item._id)}/>)
                 ) : (
                     <Empty description="Нет сообщений"/>
                 )
