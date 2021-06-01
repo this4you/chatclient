@@ -4,10 +4,11 @@ import {connect} from 'react-redux';
 import {messagesActions} from "../redux/actions";
 import {Messages as BaseMessages} from '../components';
 import {socket} from '../core';
+import {Empty} from "antd";
 
 const Messages = ({messages = [], currentDialogId, fetchMessages, addMessage, isLoading, currentUser, removeMessageById}) => {
-    const messageRef = useRef(null);
 
+    const messageRef = useRef(null);
     useEffect(() => {
         if (currentDialogId) {
             fetchMessages(currentDialogId);
@@ -23,8 +24,16 @@ const Messages = ({messages = [], currentDialogId, fetchMessages, addMessage, is
 
 
     useEffect(() => {
-        messageRef.current.scrollTo(0, 9999999);
+        if (currentDialogId) {
+            messageRef.current.scrollTo(0, 9999999);
+        }
     }, [messages]);
+
+    if (!currentDialogId) {
+        return <Empty description="Відкрийте діалог"/>
+
+    }
+
     return (
         <BaseMessages
             isLoading={isLoading}

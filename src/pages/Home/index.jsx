@@ -10,10 +10,13 @@ import {socket} from "../../core";
 import {dialogsActions} from "../../redux/actions";
 //TODO: доделать проверку на верификацию при авторизации
 //TODO: доделать отображегие подьзователя в диалоге
-const Home = ({currentUserId, setCurrentDialogId}) => {
+const Home = ({currentUserId, setCurrentDialogId, location}) => {
+    useEffect(() => {
+        setCurrentDialogId(window.location.pathname.split('dialog/')[1]);
+    }, [location.pathname]);
+
     useEffect(() => {
         if (currentUserId) {
-            setCurrentDialogId(window.location.pathname.split('dialog/')[1]);
             socket.emit('join', currentUserId.toString());
         }
     }, [currentUserId]);

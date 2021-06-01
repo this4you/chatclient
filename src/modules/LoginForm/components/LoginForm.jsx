@@ -8,8 +8,8 @@ const LoginForm = ({loading, submitHandler}) => {
     return (
         <div>
             <div className="auth__top">
-                <h2>Войти в аккаунт</h2>
-                <p>Пожалуйста, войдите в свой аккаунт</p>
+                <h2>Авторизуватися</h2>
+                <p>Будь ласка, авторизуйтесь</p>
             </div>
             <Block>
                 <Form
@@ -56,9 +56,9 @@ const LoginForm = ({loading, submitHandler}) => {
                         />
                     </Form.Item>
                     <Form.Item>
-                        <Button type='primary' loading={loading} size='large' htmlType="submit">Войти в аккаунт</Button>
+                        <Button type='primary' loading={loading} size='large' htmlType="submit">Ввійти в акаунт</Button>
                     </Form.Item>
-                    <Link to='/signup' className="auth__register-link">Зарегестрироваться</Link>
+                    <Link to='/signup' className="auth__register-link">Зареєструватися</Link>
                 </Form>
             </Block>
         </div>

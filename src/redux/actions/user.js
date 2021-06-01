@@ -31,6 +31,8 @@ const Actions = {
                 const {status, token} = data;
                 if (status === "error") {
                     message.error("Неправильный email или пароль");
+                } else if(status === "confirm") {
+                    message.info("Необходимо подтверждение email");
                 } else {
                     localStorage.token = token;
                     window.axios.defaults.headers.common['token'] = token;

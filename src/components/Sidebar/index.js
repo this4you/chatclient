@@ -17,7 +17,7 @@ const Sidebar = ({user, users, onShow, onClose, visible, inputValue, onSearch, o
                     <Button type='ghost' shape='circle'>
                         <TeamOutlined/>
                     </Button>
-                    <span>Список диалогов</span>
+                    <span>Список діалогів</span>
                 </div>
                 <Button type='ghost' shape='circle' onClick={onShow}>
                     <FormOutlined/>
@@ -29,13 +29,13 @@ const Sidebar = ({user, users, onShow, onClose, visible, inputValue, onSearch, o
                 />}
             </div>
             <Modal
-                title="Создать диалог"
+                title="Створити діалог"
                 visible={visible}
                 onOk={onClose}
                 onCancel={onClose}
                 footer={[
                     <Button key="back" onClick={onClose}>
-                        Закрыть
+                        Закрити
                     </Button>,
                     <Button
                         disabled={!messageText}
@@ -43,15 +43,15 @@ const Sidebar = ({user, users, onShow, onClose, visible, inputValue, onSearch, o
                         type="primary"
                         loading={isLoading}
                         onClick={onModalOk}>
-                        Создать
+                        Створити
                     </Button>,
                 ]}
             >
                 <Form className="add-dialog-form">
-                    <Form.Item label="Введите имя пользователя или E-Mail">
+                    <Form.Item label="Введіть ім'я користувача чи E-Mail">
                         <Select
                             value={inputValue}
-                            placeholder="Введите имя пользователя или почту"
+                            placeholder="Введіть ім'я користувача чи E-Mail"
                             notFoundContent={null}
                             filterOption={false}
                             onSearch={onSearch}
@@ -64,7 +64,7 @@ const Sidebar = ({user, users, onShow, onClose, visible, inputValue, onSearch, o
                         </Select>
                     </Form.Item>
                     {selectedUserId && (
-                        <Form.Item label="Введите текст сообщения">
+                        <Form.Item label="Введіть текст повідомлення">
                             <TextArea
                                 autoSize
                                 onChange={onChangeTextArea}

@@ -4,6 +4,9 @@ import {connect} from "react-redux";
 import {messagesActions} from "../redux/actions";
 
 const ChatInput = ({fetchSendMessage, currentDialogId}) => {
+    if (!currentDialogId) {
+        return null;
+    }
     return (
         <div>
             <ChatInputBase onSendMessage={e => {

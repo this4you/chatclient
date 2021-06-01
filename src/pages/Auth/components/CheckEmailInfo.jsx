@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Result, Button, Spin } from 'antd';
 
-import { userApi } from '../../../utils/api'
+import { userApi } from '../../../utils/api';
 import { Block } from '../../../components';
 
 const renderTextInfo = ({ hash, verified }) => {
@@ -10,20 +10,20 @@ const renderTextInfo = ({ hash, verified }) => {
             return {
                 status: 'success',
                 title: 'Готово!',
-                message: 'Аккаунт успешно подтвержден!',
+                message: 'Акаунт успішно створений!',
             };
         } else {
             return {
                 status: 'error',
-                title: 'Ошибка',
-                message: 'Вы указали несуществующий или неверный хеш.',
+                title: 'Помилка',
+                message: 'Ви указали несуществующий или неверный хеш.',
             };
         }
     } else {
         return {
             status: 'info',
-            title: 'Подтвердите почту',
-            message: 'Ссылка с подтверждением аккаунта отправлена на E-Mail.',
+            title: 'Підтвердіть пошту',
+            message: 'Посилання з підтвердженням акаунту відправлено на E-Mail.',
         };
     }
 };
@@ -65,7 +65,7 @@ const CheckEmailInfo = ({ location, history }) => {
                             info.status === 'success' &&
                             verified && (
                                 <Button type="primary" onClick={() => history.push('/signin')}>
-                                    Войти
+                                    Ввійти
                                 </Button>
                             )
                         }

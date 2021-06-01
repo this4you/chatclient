@@ -9,8 +9,8 @@ const RegisterForm = ({loading, onSubmitHandler}) => {
     return (
         <div>
             <div className="auth__top">
-                <h2>Регистрация</h2>
-                <p>Для входа в чат, вам нужно зарегистрироваться</p>
+                <h2>Реєстрація</h2>
+                <p>Для входу в чат, вам необхідно зареєструватися</p>
             </div>
             <Block>
                 {!success ? (
@@ -53,7 +53,7 @@ const RegisterForm = ({loading, onSubmitHandler}) => {
                         >
                             <Input
                                 prefix={<UserOutlined className="site-form-item-icon"/>}
-                                placeholder="Ваше имя"
+                                placeholder="Ваше ім'я"
                                 size='large'/>
                         </Form.Item>
                         <Form.Item
@@ -88,7 +88,7 @@ const RegisterForm = ({loading, onSubmitHandler}) => {
                                             return Promise.resolve();
                                         }
 
-                                        return Promise.reject('The two passwords that you entered do not match!');
+                                        return Promise.reject('Паролі мають співпадати!');
                                     },
                                 })
                             ]}
@@ -96,14 +96,14 @@ const RegisterForm = ({loading, onSubmitHandler}) => {
                             <Input.Password
                                 prefix={<LockOutlined className="site-form-item-icon"/>}
                                 type="password"
-                                placeholder="Повторите пароль"
+                                placeholder="Повторіть пароль"
                                 size="large"
                             />
                         </Form.Item>
                         <Form.Item>
-                            <Button loading={loading} type='primary' size='large' htmlType="submit">Зарегистрироваться</Button>
+                            <Button loading={loading} type='primary' size='large' htmlType="submit">Зареєструватися</Button>
                         </Form.Item>
-                        <Link to='/login' className="auth__register-link">Войти в аккаунт</Link>
+                        <Link to='/login' className="auth__register-link">Ввійти в аккаунт</Link>
                     </Form>
                 ) : (
                     <div className='auth__success-block'>
